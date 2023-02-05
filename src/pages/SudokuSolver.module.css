@@ -1,0 +1,22 @@
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.sudoku_container {
+    width: 21rem;
+    height: 21rem;
+    background-color: black;
+    gap: 0.125rem;
+}
+
+.cell {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.cell__active {
+    color: red;
+}
