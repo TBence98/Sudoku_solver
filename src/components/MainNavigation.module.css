@@ -1,0 +1,37 @@
+.header {
+    padding: 0.7rem;
+    background-color: #242424;
+}
+
+.links_container {
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+}
+
+.page_links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 15rem;
+}
+
+.nav_link {
+    color: #e5e5e5;
+    font-size: 1.15rem;
+    text-decoration: none;
+}
+
+.logo_container {
+    text-align: center;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.nav_link:hover,
+.nav_link:active,
+.nav_link.active {
+    color: #fcb66b;
+}

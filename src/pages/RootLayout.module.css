@@ -1,4 +1,9 @@
-.rootLayout {
+.page_wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+.root_layout {
     width: 80%;
     margin: 0 auto;
 }
