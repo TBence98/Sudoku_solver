@@ -1,0 +1,14 @@
+.benefit_title {
+    margin-top: 0;
+}
+
+.index {
+    border: solid 1px gray;
+    display: inline-block;
+    height: 1.6rem;
+    width: 1.6rem;
+    line-height: 1.5rem;
+    border-radius: 50%;
+    margin-right: 0.3rem;
+    text-align: center;
+}

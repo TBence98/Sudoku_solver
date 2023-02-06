@@ -1,0 +1,9 @@
+.testimonials_container {
+    margin: 2.5rem 0;
+}
+
+.testimonials_list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
