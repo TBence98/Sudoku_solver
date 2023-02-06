@@ -3,6 +3,10 @@
     min-height: 100vh;
 }
 
+.content_wrap {
+    padding-bottom: 3rem; /* Footer height */
+}
+
 .root_layout {
     width: 80%;
     margin: 0 auto;

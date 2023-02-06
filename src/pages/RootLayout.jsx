@@ -8,12 +8,14 @@ const RootLayout = () => {
     return (
         <>
             <div className={classes.page_wrapper}>
-                <MainNavigation />
-                <main className={classes.root_layout}>
-                    <Outlet />
-                </main>
+                <div className={classes.content_wrap}>
+                    <MainNavigation />
+                    <main className={classes.root_layout}>
+                        <Outlet />
+                    </main>
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </>
     );
 };
