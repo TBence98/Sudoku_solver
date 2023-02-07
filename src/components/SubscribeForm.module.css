@@ -1,0 +1,50 @@
+.form_container {
+    width: 25rem;
+    padding: 1.5rem 3rem;
+    margin: 5rem auto;
+    box-shadow: 0 2px 8px #00000040;
+    background-color: white;
+    border-radius: 14px;
+}
+
+.sign_up_title {
+    text-align: center;
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+}
+
+.input_field {
+    margin: 0 auto 0.6rem auto;
+}
+
+.text_input {
+    display: block;
+    width: 100%;
+    margin-top: 0.3rem;
+    padding: 0.2rem 0.1rem;
+    height: 2rem;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid silver;
+}
+
+.error_message {
+    color: red;
+}
+
+.difficulty_container {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.submit_btn {
+    display: block;
+    margin: 0 auto;
+    background-color: #4b00ff;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: inherit;
+}

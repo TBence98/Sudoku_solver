@@ -1,5 +1,7 @@
+import SubscribeForm from "../components/SubscribeForm";
+
 const Subscribe = () => {
-    return <h1>Subscribe</h1>;
+    return <SubscribeForm />;
 };
 
 export default Subscribe;
