@@ -160,16 +160,27 @@ const SudokuSolver = () => {
             {modalText ? (
                 <Modal message={modalText} onClose={closeModal} />
             ) : null}
-            <h1>SudokuSolver</h1>
-            <form onSubmit={submitHandler}>
+            <h1 className={classes.title}>Sudoku Solver</h1>
+            <form onSubmit={submitHandler} className={classes.form}>
                 <div className={`${classes.grid} ${classes.sudoku_container}`}>
                     {tableElements}
                 </div>
-                <button type="submit">Solve</button>
+                <div className={classes.actions}>
+                    <button
+                        type="submit"
+                        className={`${classes.btn}  ${classes.btn_primary}`}
+                    >
+                        Solve
+                    </button>
+                    <button
+                        type="button"
+                        className={`${classes.btn}  ${classes.btn_secondary}`}
+                        onClick={resetHandler}
+                    >
+                        Reset
+                    </button>
+                </div>
             </form>
-            <button type="button" onClick={resetHandler}>
-                Reset
-            </button>
         </>
     );
 };

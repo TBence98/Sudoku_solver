@@ -1,3 +1,13 @@
+.title {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form {
+    width: fit-content;
+    margin: 0 auto;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -19,4 +29,32 @@
 
 .cell__active {
     color: red;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.btn {
+    margin: 0 1rem;
+    padding: 0.3rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+.btn_primary {
+    background-color: blue;
+    color: white;
+    border: solid 1px transparent;
+}
+
+.btn_secondary {
+    background-color: white;
+    color: blue;
+    border: solid 1px blue;
 }
