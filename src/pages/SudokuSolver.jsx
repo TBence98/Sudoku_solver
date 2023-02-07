@@ -45,45 +45,50 @@ const SudokuSolver = () => {
     function createTableElements() {
         const tableElements = [];
         if (tableValues.length > 0) {
-            let shiftX = 0;
-            let shiftY = 0;
-            for (let i = 1; i < 4; i++) {
-                for (let j = 1; j < 4; j++) {
+            const boxCoordinates = [
+                [0, 0],
+                [0, 1],
+                [0, 2],
+                [1, 0],
+                [1, 1],
+                [1, 2],
+                [2, 0],
+                [2, 1],
+                [2, 2],
+            ];
+            for (let y = 0; y < 9; y += 3) {
+                for (let x = 0; x < 9; x += 3) {
                     const subgrid = [];
-                    for (let y = shiftY; y < 3 + shiftY; y++) {
-                        const subgridRow = [];
-                        for (let x = shiftX; x < 3 + shiftX; x++) {
-                            const isHighlighted =
-                                isValueSetByUser(x, y) && formBeenSubmitted;
+                    for (let i = 0; i < 9; i++) {
+                        const coordinates = [...boxCoordinates[i]];
+                        const computedY = (coordinates[0] += y);
+                        const computedX = (coordinates[1] += x);
 
-                            subgridRow.push(
-                                <input
-                                    type="number"
-                                    className={`${classes.cell} ${
-                                        isHighlighted
-                                            ? classes.cell__active
-                                            : ""
-                                    }`}
-                                    onChange={cellChangeHandler}
-                                    data-x={x}
-                                    data-y={y}
-                                    defaultValue={tableValues[y][x]}
-                                    min="1"
-                                    max="9"
-                                />
-                            );
-                        }
-                        subgrid.push(...subgridRow);
+                        const isHighlighted =
+                            isValueSetByUser(computedX, computedY) &&
+                            formBeenSubmitted;
+
+                        subgrid.push(
+                            <input
+                                type="number"
+                                className={`${classes.cell} ${
+                                    isHighlighted ? classes.cell__active : ""
+                                }`}
+                                onChange={cellChangeHandler}
+                                data-x={computedX}
+                                data-y={computedY}
+                                defaultValue={tableValues[computedY][computedX]}
+                                min="1"
+                                max="9"
+                            />
+                        );
                     }
-                    shiftX += 3;
                     tableElements.push(
                         <div className={classes.grid} key={Math.random()}>
                             {...subgrid}
                         </div>
                     );
                 }
-                shiftX = 0;
-                shiftY += 3;
             }
 
             function isValueSetByUser(x, y) {
