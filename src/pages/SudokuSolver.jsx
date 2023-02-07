@@ -73,6 +73,8 @@ const SudokuSolver = () => {
                                 data-x={x}
                                 data-y={y}
                                 defaultValue={tableValues[y][x]}
+                                min="1"
+                                max="9"
                             />
                         );
                     }
