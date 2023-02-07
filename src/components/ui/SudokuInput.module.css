@@ -1,0 +1,10 @@
+.cell {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.cell__active {
+    color: red;
+}

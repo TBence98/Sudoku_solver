@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import useSolveSudoku from "../hooks/useSolveSudoku";
 import Modal from "../components/ui/Modal";
+import SudokuInput from "../components/ui/SudokuInput";
 
 import classes from "./SudokuSolver.module.css";
 
 let inputsChangedByUser = [];
-let isUserInputsHighlighted = false;
 
 const SudokuSolver = () => {
     const [tableValues, setTableValues] = useState([]);
@@ -64,22 +64,18 @@ const SudokuSolver = () => {
                         const computedY = (coordinates[0] += y);
                         const computedX = (coordinates[1] += x);
 
-                        const isHighlighted =
-                            isValueSetByUser(computedX, computedY) &&
-                            isUserInputsHighlighted;
+                        const isHighlighted = isValueSetByUser(
+                            computedX,
+                            computedY
+                        );
 
                         subgrid.push(
-                            <input
-                                type="number"
-                                className={`${classes.cell} ${
-                                    isHighlighted ? classes.cell__active : ""
-                                }`}
-                                onChange={cellChangeHandler}
-                                data-x={computedX}
-                                data-y={computedY}
-                                defaultValue={tableValues[computedY][computedX]}
-                                min="1"
-                                max="9"
+                            <SudokuInput
+                                value={tableValues[computedY][computedX]}
+                                isHighlightedByDefault={isHighlighted}
+                                x={computedX}
+                                y={computedY}
+                                valueChangeHandler={cellChangeHandler}
                             />
                         );
                     }
@@ -102,11 +98,7 @@ const SudokuSolver = () => {
         return tableElements;
     }
 
-    function cellChangeHandler(event) {
-        const y = event.target.dataset.y;
-        const x = event.target.dataset.x;
-        const value = event.target.value;
-
+    function cellChangeHandler(value, x, y) {
         const isChangedValue = inputsChangedByUser.some(
             (input) => input.x === x && input.y === y
         );
@@ -147,7 +139,6 @@ const SudokuSolver = () => {
 
         if (result) {
             setTableValues(result);
-            isUserInputsHighlighted = true;
         } else {
             setTableValues(toBeSolvedTable);
             setModalText("Can't be solved");
