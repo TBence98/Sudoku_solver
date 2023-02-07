@@ -3,7 +3,7 @@ import * as Yup from "yup";
 
 import classes from "./SubscribeForm.module.css";
 
-const SubscribeForm = () => {
+const SubscribeForm = ({ submitHandler }) => {
     const initialValues = {
         lastName: "",
         firstName: "",
@@ -21,6 +21,7 @@ const SubscribeForm = () => {
 
     function onSubmit(values, actions) {
         console.log(values);
+        submitHandler(values);
         actions.setSubmitting(false);
     }
 
