@@ -5,7 +5,7 @@ import Modal from "../components/ui/Modal";
 import classes from "./SudokuSolver.module.css";
 
 let inputsChangedByUser = [];
-let formBeenSubmitted = false;
+let isUserInputsHighlighted = false;
 
 const SudokuSolver = () => {
     const [tableValues, setTableValues] = useState([]);
@@ -66,7 +66,7 @@ const SudokuSolver = () => {
 
                         const isHighlighted =
                             isValueSetByUser(computedX, computedY) &&
-                            formBeenSubmitted;
+                            isUserInputsHighlighted;
 
                         subgrid.push(
                             <input
@@ -136,22 +136,22 @@ const SudokuSolver = () => {
             }
         }
 
+        const result = solve(toBeSolvedTable);
+        console.log(toBeSolvedTable);
+        console.log(result);
+
         localStorage.setItem(
             "inputsChangedByUser",
             JSON.stringify(inputsChangedByUser)
         );
 
-        const result = solve(toBeSolvedTable);
-        console.log(toBeSolvedTable);
-        console.log(result);
-
         if (result) {
             setTableValues(result);
+            isUserInputsHighlighted = true;
         } else {
+            setTableValues(toBeSolvedTable);
             setModalText("Can't be solved");
         }
-
-        formBeenSubmitted = true;
     }
 
     function resetHandler() {
