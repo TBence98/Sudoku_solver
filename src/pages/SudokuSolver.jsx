@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import useSolveSudoku from "../hooks/useSolveSudoku";
+import Modal from "../components/ui/Modal";
 
 import classes from "./SudokuSolver.module.css";
 
@@ -9,6 +10,7 @@ const SudokuSolver = () => {
     const [tableElements, setTableElements] = useState([]);
     const [tableValues, setTableValues] = useState([]);
     const [isInitialRender, setIsInitialRender] = useState(true);
+    const [modalText, setModalText] = useState("");
     const solve = useSolveSudoku();
 
     useEffect(() => {
@@ -135,7 +137,13 @@ const SudokuSolver = () => {
             JSON.stringify(inputsChangedByUser)
         );
 
-        setTableValues(solve(toBeSolvedTable));
+        const result = solve(toBeSolvedTable);
+
+        if (result) {
+            setTableValues(result);
+        } else {
+            setModalText("Can't be solved");
+        }
     }
 
     function resetHandler() {
@@ -143,8 +151,15 @@ const SudokuSolver = () => {
         createDefaultValues();
     }
 
+    function closeModal() {
+        setModalText("");
+    }
+
     return (
         <>
+            {modalText ? (
+                <Modal message={modalText} onClose={closeModal} />
+            ) : null}
             <h1>SudokuSolver</h1>
             <form onSubmit={submitHandler}>
                 <div className={`${classes.grid} ${classes.sudoku_container}`}>
