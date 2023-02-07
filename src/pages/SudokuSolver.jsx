@@ -5,11 +5,10 @@ import Modal from "../components/ui/Modal";
 import classes from "./SudokuSolver.module.css";
 
 let inputsChangedByUser = [];
+let formBeenSubmitted = false;
 
 const SudokuSolver = () => {
-    const [tableElements, setTableElements] = useState([]);
     const [tableValues, setTableValues] = useState([]);
-    const [isInitialRender, setIsInitialRender] = useState(true);
     const [modalText, setModalText] = useState("");
     const solve = useSolveSudoku();
 
@@ -43,61 +42,59 @@ const SudokuSolver = () => {
         setTableValues(defaultValues);
     }
 
-    useEffect(() => {
-        if (tableValues.length > 0) {
-            createTableElements();
-            setIsInitialRender(false);
-        }
-    }, [tableValues]);
-
     function createTableElements() {
-        let shiftX = 0;
-        let shiftY = 0;
         const tableElements = [];
-        for (let i = 1; i < 4; i++) {
-            for (let j = 1; j < 4; j++) {
-                const subgrid = [];
-                for (let y = shiftY; y < 3 + shiftY; y++) {
-                    const subgridRow = [];
-                    for (let x = shiftX; x < 3 + shiftX; x++) {
-                        const isHighlighted =
-                            isValueSetByUser(x, y) && !isInitialRender;
+        if (tableValues.length > 0) {
+            let shiftX = 0;
+            let shiftY = 0;
+            for (let i = 1; i < 4; i++) {
+                for (let j = 1; j < 4; j++) {
+                    const subgrid = [];
+                    for (let y = shiftY; y < 3 + shiftY; y++) {
+                        const subgridRow = [];
+                        for (let x = shiftX; x < 3 + shiftX; x++) {
+                            const isHighlighted =
+                                isValueSetByUser(x, y) && formBeenSubmitted;
 
-                        subgridRow.push(
-                            <input
-                                type="number"
-                                className={`${classes.cell} ${
-                                    isHighlighted ? classes.cell__active : ""
-                                }`}
-                                onChange={cellChangeHandler}
-                                data-x={x}
-                                data-y={y}
-                                defaultValue={tableValues[y][x]}
-                                min="1"
-                                max="9"
-                            />
-                        );
+                            subgridRow.push(
+                                <input
+                                    type="number"
+                                    className={`${classes.cell} ${
+                                        isHighlighted
+                                            ? classes.cell__active
+                                            : ""
+                                    }`}
+                                    onChange={cellChangeHandler}
+                                    data-x={x}
+                                    data-y={y}
+                                    defaultValue={tableValues[y][x]}
+                                    min="1"
+                                    max="9"
+                                />
+                            );
+                        }
+                        subgrid.push(...subgridRow);
                     }
-                    subgrid.push(...subgridRow);
+                    shiftX += 3;
+                    tableElements.push(
+                        <div className={classes.grid} key={Math.random()}>
+                            {...subgrid}
+                        </div>
+                    );
                 }
-                shiftX += 3;
-                tableElements.push(
-                    <div className={classes.grid} key={Math.random()}>
-                        {...subgrid}
-                    </div>
+                shiftX = 0;
+                shiftY += 3;
+            }
+
+            function isValueSetByUser(x, y) {
+                return inputsChangedByUser.some(
+                    (input) =>
+                        input.x === x.toString() && input.y === y.toString()
                 );
             }
-            shiftX = 0;
-            shiftY += 3;
         }
 
-        function isValueSetByUser(x, y) {
-            return inputsChangedByUser.some(
-                (input) => input.x === x.toString() && input.y === y.toString()
-            );
-        }
-
-        setTableElements(tableElements);
+        return tableElements;
     }
 
     function cellChangeHandler(event) {
@@ -140,12 +137,16 @@ const SudokuSolver = () => {
         );
 
         const result = solve(toBeSolvedTable);
+        console.log(toBeSolvedTable);
+        console.log(result);
 
         if (result) {
             setTableValues(result);
         } else {
             setModalText("Can't be solved");
         }
+
+        formBeenSubmitted = true;
     }
 
     function resetHandler() {
@@ -165,7 +166,7 @@ const SudokuSolver = () => {
             <h1 className={classes.title}>Sudoku Solver</h1>
             <form onSubmit={submitHandler} className={classes.form}>
                 <div className={`${classes.grid} ${classes.sudoku_container}`}>
-                    {tableElements}
+                    {createTableElements()}
                 </div>
                 <div className={classes.actions}>
                     <button
