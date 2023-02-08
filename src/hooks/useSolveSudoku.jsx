@@ -1,7 +1,5 @@
 const useSolveSudoku = () => {
     function solve(board) {
-        // THIS FUNCTION WORKS.
-        // Board -> Board
         // solves the given sudoku board
         // ASSUME the given sudoku board is valid
         if (solved(board)) {
@@ -12,10 +10,6 @@ const useSolveSudoku = () => {
             return searchForSolution(validBoards);
         }
     }
-
-    // ______TESTS______ //
-    // console.log(solve(bd4))
-    // ______TESTS______ //
 
     function searchForSolution(boards) {
         // List[Board] -> Board or false
@@ -35,7 +29,6 @@ const useSolveSudoku = () => {
     }
 
     function solved(board) {
-        // THIS FUNCTION WORKS.
         // Board -> Boolean
         // checks to see if the given puzzle is solved
         for (let i = 0; i < 9; i++) {
@@ -48,12 +41,7 @@ const useSolveSudoku = () => {
         return true;
     }
 
-    // ______TESTS______ //
-    // console.log(solved(bd3))
-    // ______TESTS______ //
-
     function nextBoards(board) {
-        // THIS FUNCTION WORKS.
         // Board -> List[Board]
         // finds the first emply square and generates 9 different boards filling in that square with numbers 1...9
         const res = [];
@@ -73,7 +61,6 @@ const useSolveSudoku = () => {
     }
 
     function findEmptySquare(board) {
-        // THIS FUNCTION WORKS.
         // Board -> [Int, Int]
         // (get the i j coordinates for the first empty square)
         for (let i = 0; i < 9; i++) {
@@ -85,28 +72,18 @@ const useSolveSudoku = () => {
         }
     }
 
-    // ______TESTS______ //
-    // console.log(nextBoards(bd3))
-    // console.log(findEmptySquare(bd3))
-    // ______TESTS______ //
-
     function keepOnlyValid(boards) {
+        // Boards -> Boards
         return boards.filter((b) => validBoard(b));
     }
 
-    // ______TESTS______ //
-    // console.log(keepOnlyValid([bd1, bd2, bd3]))
-    // ______TESTS______ //
-
     function validBoard(board) {
-        // THIS FUNCTION WORKS.
         // Board -> Boolean
         // checks to see if given board is valid
         return rowsGood(board) && columnsGood(board) && boxesGood(board);
     }
 
     function rowsGood(board) {
-        // THIS FUNCTION WORKS.
         // Board -> Boolean
         // makes sure there are no repeating numbers for each row
         for (let i = 0; i < 9; i++) {
@@ -123,7 +100,6 @@ const useSolveSudoku = () => {
     }
 
     function columnsGood(board) {
-        // THIS FUNCTION WORKS.
         // Board -> Boolean
         // makes sure there are no repeating numbers for each column
         for (let i = 0; i < 9; i++) {
@@ -152,7 +128,6 @@ const useSolveSudoku = () => {
             [2, 1],
             [2, 2],
         ];
-        // THIS FUNCTION WORKS.
         // Board -> Boolean
         // makes sure there are no repeating numbers for each box
         for (let y = 0; y < 9; y += 3) {

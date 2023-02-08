@@ -8,6 +8,7 @@ import classes from "./SudokuSolver.module.css";
 let inputsChangedByUser = [];
 
 const SudokuSolver = () => {
+    // 2d array representation of the sudoku board
     const [tableValues, setTableValues] = useState([]);
     const [modalText, setModalText] = useState("");
     const solve = useSolveSudoku();
@@ -56,9 +57,12 @@ const SudokuSolver = () => {
                 [2, 1],
                 [2, 2],
             ];
+            /* Traverse the 2d tableValues array subgrids first
+            from left to right, top to bottom */
             for (let y = 0; y < 9; y += 3) {
                 for (let x = 0; x < 9; x += 3) {
                     const subgrid = [];
+                    // Traverse cells inside the current subgrid
                     for (let i = 0; i < 9; i++) {
                         const coordinates = [...boxCoordinates[i]];
                         const computedY = (coordinates[0] += y);
@@ -124,8 +128,6 @@ const SudokuSolver = () => {
         }
 
         const result = solve(toBeSolvedTable);
-        console.log(toBeSolvedTable);
-        console.log(result);
 
         localStorage.setItem(
             "inputsChangedByUser",
