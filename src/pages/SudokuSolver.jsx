@@ -99,18 +99,13 @@ const SudokuSolver = () => {
     }
 
     function cellChangeHandler(value, x, y) {
-        const isChangedValue = inputsChangedByUser.some(
-            (input) => input.x === x && input.y === y
+        /* if the input was stored in the inputsChangedByUser
+         array then it must be removed with this filter */
+        inputsChangedByUser = inputsChangedByUser.filter(
+            (input) => input.x !== x || input.y !== y
         );
 
-        if (value === "" && isChangedValue) {
-            //remove from the array to prevent memory leak
-            console.log("remove from array");
-            inputsChangedByUser = inputsChangedByUser.filter(
-                (input) => input.x !== x || input.y !== y
-            );
-        } else if (value !== "") {
-            // add to the array
+        if (value !== "") {
             inputsChangedByUser.push({ x, y, value });
         }
     }
