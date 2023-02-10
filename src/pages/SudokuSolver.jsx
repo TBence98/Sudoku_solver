@@ -11,7 +11,7 @@ const SudokuSolver = () => {
     // 2d array representation of the sudoku board
     const [tableValues, setTableValues] = useState([]);
     const [modalText, setModalText] = useState("");
-    const solve = useSolveSudoku();
+    const [solveRecursive, solveIterative] = useSolveSudoku();
 
     useEffect(() => {
         if (localStorage.getItem("inputsChangedByUser")) {
@@ -127,7 +127,9 @@ const SudokuSolver = () => {
             }
         }
 
-        const result = solve(toBeSolvedTable);
+        // You can play with the different solve functions
+        const result = solveRecursive(toBeSolvedTable);
+        /* const result = solveIterative(toBeSolvedTable); */
 
         localStorage.setItem(
             "inputsChangedByUser",

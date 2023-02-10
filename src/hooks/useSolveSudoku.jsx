@@ -1,5 +1,89 @@
 const useSolveSudoku = () => {
-    function solve(board) {
+    /* There is two solve functions in this solve hook, both implement a backtracking algorithm
+    , but one does this with recursion and the other one with iteration. I think the recursive
+    one is better, because it is less complex and easier to understand, generally a better fit
+    to implement this algorithm, but I made the iterative one anyway just for fun :) */
+
+    function solveIterative(unsolvedBoard) {
+        const solvedBoard = unsolvedBoard.map((row) => [...row]);
+        /* keep track of the current 2d array traverse mod, if isBacktracking 
+        is true, then traverse the array backwards (right to left, bottom to top) */
+        let isBacktracking = false;
+
+        for (let i = 0; i < solvedBoard.length; i++) {
+            const startJ = isBacktracking ? 8 : 0;
+            for (let j = startJ; j < solvedBoard[i].length; j++) {
+                /* if a valid cell value is found in this iteration then it will be true */
+                let isValidCellValue = false;
+
+                /* if there is a value in the unsolvedBoard and not in backtracking mode then
+                just skip this iteration */
+                if (unsolvedBoard[i][j] !== "" && !isBacktracking) {
+                    continue;
+                }
+
+                /* if there is no value in the unsolvedBoard and not in backtracking mode then
+                try to find a valid cell value */
+                if (unsolvedBoard[i][j] === "" && !isBacktracking) {
+                    for (let cellValue = 1; cellValue <= 9; cellValue++) {
+                        const possibleSolution = solvedBoard.map((row) => [
+                            ...row,
+                        ]);
+                        possibleSolution[i][j] = cellValue.toString();
+                        if (validBoard(possibleSolution)) {
+                            solvedBoard[i][j] = cellValue.toString();
+                            isValidCellValue = true;
+                            break;
+                        }
+                    }
+                }
+
+                /* if there is no value in the unsolvedBoard and at backtracking mode then
+                try to find a new valid cell value */
+                if (unsolvedBoard[i][j] === "" && isBacktracking) {
+                    if (+solvedBoard[i][j] < 9) {
+                        for (
+                            let cellValue = +solvedBoard[i][j] + 1;
+                            cellValue <= 9;
+                            cellValue++
+                        ) {
+                            const possibleSolution = solvedBoard.map((row) => [
+                                ...row,
+                            ]);
+                            possibleSolution[i][j] = cellValue.toString();
+                            if (validBoard(possibleSolution)) {
+                                solvedBoard[i][j] = cellValue.toString();
+                                isValidCellValue = true;
+                                isBacktracking = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                /* if finding a new valid cell value was unsuccessful then start backtracking */
+                if (!isValidCellValue) {
+                    if (unsolvedBoard[i][j] === "") {
+                        solvedBoard[i][j] = "";
+                    }
+                    isBacktracking = true;
+                    if (j === 0) {
+                        if (i === 0) {
+                            return false;
+                        }
+                        i -= 2;
+                        break;
+                    } else {
+                        j -= 2;
+                    }
+                }
+            }
+        }
+
+        return solvedBoard;
+    }
+
+    function solveRecursive(board) {
         // solves the given sudoku board
         // ASSUME the given sudoku board is valid
         if (solved(board)) {
@@ -19,7 +103,7 @@ const useSolveSudoku = () => {
         } else {
             // backtracking search for solution
             const first = boards.shift();
-            const tryPath = solve(first);
+            const tryPath = solveRecursive(first);
             if (tryPath !== false) {
                 return tryPath;
             } else {
@@ -149,7 +233,7 @@ const useSolveSudoku = () => {
         return true;
     }
 
-    return solve;
+    return [solveRecursive, solveIterative];
 };
 
 export default useSolveSudoku;
