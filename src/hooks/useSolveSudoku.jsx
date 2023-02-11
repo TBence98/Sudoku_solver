@@ -25,12 +25,10 @@ const useSolveSudoku = () => {
                 /* if there is no value in the unsolvedBoard and not in backtracking mode then
                 try to find a valid cell value */
                 if (unsolvedBoard[i][j] === "" && !isBacktracking) {
+                    const possibleSolution = solvedBoard.map((row) => [...row]);
                     for (let cellValue = 1; cellValue <= 9; cellValue++) {
-                        const possibleSolution = solvedBoard.map((row) => [
-                            ...row,
-                        ]);
                         possibleSolution[i][j] = cellValue.toString();
-                        if (validBoard(possibleSolution)) {
+                        if (isValidBoard(possibleSolution, i, j)) {
                             solvedBoard[i][j] = cellValue.toString();
                             isValidCellValue = true;
                             break;
@@ -42,16 +40,16 @@ const useSolveSudoku = () => {
                 try to find a new valid cell value */
                 if (unsolvedBoard[i][j] === "" && isBacktracking) {
                     if (+solvedBoard[i][j] < 9) {
+                        const possibleSolution = solvedBoard.map((row) => [
+                            ...row,
+                        ]);
                         for (
                             let cellValue = +solvedBoard[i][j] + 1;
                             cellValue <= 9;
                             cellValue++
                         ) {
-                            const possibleSolution = solvedBoard.map((row) => [
-                                ...row,
-                            ]);
                             possibleSolution[i][j] = cellValue.toString();
-                            if (validBoard(possibleSolution)) {
+                            if (isValidBoard(possibleSolution, i, j)) {
                                 solvedBoard[i][j] = cellValue.toString();
                                 isValidCellValue = true;
                                 isBacktracking = false;
@@ -81,6 +79,65 @@ const useSolveSudoku = () => {
         }
 
         return solvedBoard;
+
+        // ===== VALIDATOR FUNCTIONS =====
+
+        function isValidBoard(board, i, j) {
+            // Board -> Boolean
+            // checks to see if given board is valid
+            return (
+                isRowValid(board, i) &&
+                isColumnValid(board, j) &&
+                isSubgridValid(board, i, j)
+            );
+        }
+
+        function isRowValid(board, validatedRow) {
+            // Board -> Boolean
+            // makes sure there are no repeating numbers for each row
+
+            const cur = [];
+            for (let j = 0; j < 9; j++) {
+                if (cur.includes(board[validatedRow][j])) {
+                    return false;
+                } else if (board[validatedRow][j] !== "") {
+                    cur.push(board[validatedRow][j]);
+                }
+            }
+            return true;
+        }
+
+        function isColumnValid(board, validatedColumn) {
+            // Board -> Boolean
+            // makes sure there are no repeating numbers for each column
+            const cur = [];
+            for (let i = 0; i < 9; i++) {
+                if (cur.includes(board[i][validatedColumn])) {
+                    return false;
+                } else if (board[i][validatedColumn] !== "") {
+                    cur.push(board[i][validatedColumn]);
+                }
+            }
+
+            return true;
+        }
+
+        function isSubgridValid(board, row, column) {
+            const rowStart = Math.floor(row / 3) * 3;
+            const columnStart = Math.floor(column / 3) * 3;
+            const valuesInSubgrid = [];
+
+            for (let i = rowStart; i < rowStart + 3; i++) {
+                for (let j = columnStart; j < columnStart + 3; j++) {
+                    if (valuesInSubgrid.includes(board[i][j])) {
+                        return false;
+                    } else if (board[i][j] !== "") {
+                        valuesInSubgrid.push(board[i][j]);
+                    }
+                }
+            }
+            return true;
+        }
     }
 
     function solveRecursive(board) {

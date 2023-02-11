@@ -128,8 +128,8 @@ const SudokuSolver = () => {
         }
 
         // You can play with the different solve functions
-        const result = solveRecursive(toBeSolvedTable);
-        /* const result = solveIterative(toBeSolvedTable); */
+        /* const result = solveRecursive(toBeSolvedTable); */
+        const result = solveIterative(toBeSolvedTable);
 
         localStorage.setItem(
             "inputsChangedByUser",
