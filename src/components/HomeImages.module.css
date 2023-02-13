@@ -1,12 +1,39 @@
-.images {
-    height: 12rem;
+.image_carousel {
+    margin: 2.5rem 0;
+    position: relative;
+}
+
+.visible_images {
     overflow: hidden;
+}
+
+.images {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin: 2.5rem 0;
+    height: 12rem;
 }
 
 .image {
     width: 24%;
+    margin: 0 0.5%;
+    object-fit: contain;
+}
+
+.arrow {
+    background-color: transparent;
+    border: none;
+    font-size: 4rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+}
+
+.arrow--right {
+    right: -4rem;
+}
+
+.arrow--left {
+    left: -4rem;
 }

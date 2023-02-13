@@ -17,6 +17,7 @@ const Home = () => {
                     { src: sudoku_img, alt: "sudoku" },
                     { src: sudoku_img, alt: "sudoku" },
                     { src: sudoku_img, alt: "sudoku" },
+                    { src: sudoku_img, alt: "sudoku" },
                 ]}
             />
             <LineSeparator />
