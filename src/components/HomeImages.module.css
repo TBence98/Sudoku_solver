@@ -8,12 +8,14 @@
 }
 
 .images {
+    position: relative;
     display: flex;
     align-items: center;
     height: 12rem;
 }
 
 .image {
+    position: absolute;
     width: 24%;
     margin: 0 0.5%;
     object-fit: contain;
